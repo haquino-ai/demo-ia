@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { clasificar } from "@/lib/clasificar";
+import { crearClienteSupabase } from "@/lib/supabase";
 
 const MIN_CARACTERES = 10;
 const MAX_CARACTERES = 1000;
@@ -31,7 +32,30 @@ export async function POST(request: Request) {
     );
   }
 
+  // Se comprueba antes de llamar a la IA, para no gastar saldo en algo que no se podría guardar.
+  const supabase = crearClienteSupabase();
+  if (!supabase) {
+    return NextResponse.json(
+      { error: "Falta configurar la base de datos. Avisa a la persona que administra el buzón." },
+      { status: 500 },
+    );
+  }
+
   const clasificacion = await clasificar(limpio);
+
+  const { error } = await supabase.from("sugerencias").insert({
+    texto: limpio,
+    area: clasificacion?.area ?? null,
+    urgencia: clasificacion?.urgencia ?? null,
+    resumen: clasificacion?.resumen ?? null,
+  });
+  if (error) {
+    console.error("Guardado fallido:", error.message);
+    return NextResponse.json(
+      { error: "No se pudo guardar la sugerencia. Inténtalo de nuevo." },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({
     mensaje: "recibido",
