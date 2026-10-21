@@ -1,0 +1,37 @@
+{
+  "name": "Buzón de sugerencias con IA",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+  "hostRequirements": {
+    "cpus": 2
+  },
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install -g vercel @anthropic-ai/claude-code && ([ -f package.json ] && npm install || true)",
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+    }
+  },
+  "containerEnv": {
+    "ANTHROPIC_MODEL": "claude-haiku-5-5"
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "Buzón (npm run dev)",
+      "onAutoForward": "notify"
+    }
+  },
+  "secrets": {
+    "ANTHROPIC_API_KEY": {
+      "description": "Clave de la IA que le entrega el instructor (con saldo y tiempo limitados). No la escriba en ningún archivo."
+    },
+    "SUPABASE_URL": {
+      "description": "Dirección de su proyecto de Supabase, por ejemplo https://abcd.supabase.co"
+    },
+    "SUPABASE_SECRET_KEY": {
+      "description": "Llave SECRETA de Supabase (empieza con sb_secret_). Solo vive aquí y en Vercel."
+    },
+    "CLAVE_REVISOR": {
+      "description": "Una contraseña corta que usted inventa para entrar a la pantalla /revisar."
+    }
+  }
+}

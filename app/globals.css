@@ -1,0 +1,44 @@
+:root {
+  --fondo: #faf8f3;
+  --tinta: #15112b;
+  --suave: #3f3b54;
+  --naranja: #ff5a36;
+  --verde: #2fb68c;
+  --rojo: #e5484d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+main { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+h1 { font-size: 28px; margin: 0 0 6px; }
+.sub { color: var(--suave); margin: 0 0 24px; }
+a { color: var(--naranja); }
+textarea, input {
+  width: 100%; font: inherit; padding: 12px; border: 1px solid #d9d4c7;
+  border-radius: 8px; background: #fff; color: var(--tinta);
+}
+textarea { min-height: 130px; resize: vertical; }
+button {
+  font: inherit; font-weight: 600; padding: 10px 18px; border: 0; border-radius: 8px;
+  background: var(--naranja); color: #fff; cursor: pointer;
+}
+button:disabled { opacity: 0.5; cursor: wait; }
+button.ok { background: var(--verde); }
+button.no { background: var(--rojo); }
+.fila { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.tarjeta { background: #fff; border-radius: 12px; padding: 18px 20px; margin-top: 14px; border: 1px solid #ece7da; }
+.etiqueta {
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 99px; background: #ffe3da; color: #b3391c; margin-right: 6px;
+}
+.etiqueta.alta { background: #fde0e1; color: #a1262b; }
+.etiqueta.baja { background: #e3f5ee; color: #1c7a5d; }
+.etiqueta.aprobada { background: #e3f5ee; color: #1c7a5d; }
+.etiqueta.rechazada { background: #fde0e1; color: #a1262b; }
+.aviso { color: var(--suave); font-size: 14px; }
+.error { color: var(--rojo); }
